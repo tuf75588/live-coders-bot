@@ -1,6 +1,7 @@
 // @ts-check
 
-import * as twitchAPI from './twitchAPI.js';
+// eslint-disable-next-line import/extensions
+import * as twitchAPI from './lib/twitchAPI.js';
 
 twitchAPI
   .getTeam('livecoders')

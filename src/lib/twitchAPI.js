@@ -1,8 +1,15 @@
 // @ts-check
 import axios from 'axios';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const twitchAPI = axios.create({
   baseURL: 'https://api.twitch.tv/kraken',
+  headers: {
+    Accept: 'application/vnd.twitchtv.v5+json',
+    Authorization: `OAuth ${process.env.OAUTH_TOKEN}`,
+    'Client-ID': process.env.CLIENT_ID,
+  },
 });
 
 function getChannel(channelName) {
