@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "checkJs": true
+  },
+
+  "exclude": ["node_modules"]
+}
