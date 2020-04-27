@@ -1,8 +1,17 @@
 // @ts-check
 import axios from 'axios';
 import dotenv from 'dotenv';
+import tmi from 'tmi.js';
 
-dotenv.config();
+const client = new tmi.Client({
+  connection: {
+    secure: true,
+  },
+  identity: {
+    username: 'Echo',
+  },
+});
+
 const twitchAPI = axios.create({
   baseURL: 'https://api.twitch.tv/kraken',
   headers: {
