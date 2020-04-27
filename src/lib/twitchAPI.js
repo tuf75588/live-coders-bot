@@ -1,15 +1,43 @@
 // @ts-check
 import axios from 'axios';
-import dotenv from 'dotenv';
 import tmi from 'tmi.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const client = new tmi.Client({
+  options: { debug: true },
   connection: {
+    reconnect: true,
     secure: true,
   },
+
   identity: {
-    username: 'Echo',
+    username: process.env.BOT_USERNAME,
+    password: process.env.OAUTH_TOKEN,
   },
+  channels: ['atd285'],
+});
+
+client.connect();
+
+client.on('message', (channel, userstate, message, self) => {
+  if (self) {
+    return;
+  }
+  switch (userstate['message-type']) {
+    case 'whisper':
+      return;
+    case 'chat':
+      if (message.toLowerCase() === '!hello') {
+        client.say(channel, `${userstate.username} hey!`);
+      } else if (message.toLowerCase() === '!hi') {
+        client.say(channel, 'hi!');
+      }
+      break;
+    default:
+      // eslint-disable-next-line consistent-return
+      return userstate;
+  }
 });
 
 const twitchAPI = axios.create({
