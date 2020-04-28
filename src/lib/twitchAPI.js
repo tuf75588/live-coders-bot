@@ -6,7 +6,7 @@ const twitchAPI = axios.create({
   baseURL: 'https://api.twitch.tv/kraken',
   headers: {
     Accept: 'application/vnd.twitchtv.v5+json',
-    Authorization: `OAuth ${process.env.OAUTH_TOKEN}`,
+    Authorization: `OAuth ${config.OAUTH_TOKEN}`,
     'Client-ID': config.CLIENT_ID,
   },
 });
