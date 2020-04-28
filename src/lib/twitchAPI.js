@@ -76,3 +76,8 @@ async function getChannel(channelId) {
   const { data } = await twitchAPI.get(`/channels/${channelId}`);
   return data;
 }
+
+async function getStream(channelId) {
+  const { data } = await twitchAPI.get(`/streams/${channelId}`);
+  return data;
+}

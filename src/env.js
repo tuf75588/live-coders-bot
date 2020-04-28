@@ -1,18 +1,30 @@
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
-// dotenv.config();
+dotenv.config();
 
-// const { CLIENT_ID, CLIENT_SECRET, OAUTH_TOKEN } = process.env;
+const {
+  OAUTH_TOKEN,
+  CLIENT_ID,
+  SHOUTOUT_TIMEOUT,
+  CHANNEL_NAME,
+  BOT_USERNAME,
+  CHANNEL_ID,
+} = process.env;
 
-// const config = { CLIENT_ID, CLIENT_SECRET, OAUTH_TOKEN };
+const env = {
+  OAUTH_TOKEN,
+  CLIENT_ID,
+  SHOUTOUT_TIMEOUT,
+  CHANNEL_NAME,
+  CHANNEL_ID,
+  BOT_USERNAME,
+};
 
-// // a simple check to ensure all proper key/values are provided in the .env file
-// Object.entries(config).forEach(([key, value]) => {
-//   if (!value) {
-//     throw new Error(`${key} must be specified in your env file`);
-//   }
-// });
+// check to ensure all envrionmental variables are accounted for
 
-// export default {
-//   ...process.env,
-// };
+Object.entries(env).forEach(([name, value]) => {
+  if (!value) {
+    throw new Error(`${name} is not specified in your .env file`);
+  }
+});
+export default env;
