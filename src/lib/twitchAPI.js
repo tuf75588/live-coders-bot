@@ -18,27 +18,7 @@ const client = new tmi.Client({
   channels: ['atd285'],
 });
 
-client.connect();
-
-client.on('message', (channel, userstate, message, self) => {
-  if (self) {
-    return;
-  }
-  switch (userstate['message-type']) {
-    case 'whisper':
-      return;
-    case 'chat':
-      if (message.toLowerCase() === '!hello') {
-        client.say(channel, `${userstate.username} hey!`);
-      } else if (message.toLowerCase() === '!hi') {
-        client.say(channel, 'hi!');
-      }
-      break;
-    default:
-      // eslint-disable-next-line consistent-return
-      return userstate;
-  }
-});
+// client.connect();
 
 const twitchAPI = axios.create({
   baseURL: 'https://api.twitch.tv/kraken',
@@ -49,8 +29,24 @@ const twitchAPI = axios.create({
   },
 });
 
-function getChannel(channelName) {
-  return channelName;
+function initBot(teamMembers) {
+  const members = teamMembers.reduce((idObj, member) => {
+    // eslint-disable-next-line
+    idObj.set(member._id, member);
+    return idObj;
+  }, new Map());
+  client.connect();
+  client.on('message', (channel, userState, message, self) => {
+    if (self) return;
+    if (userState['message-type'] === 'whisper') return;
+    if (members.has(userState['user-id'])) {
+      // someone has gone live
+      client.say(
+        channel,
+        `Live coders team member detected! ${userState.username}`
+      );
+    }
+  });
 }
 
 // eslint-disable-next-line import/prefer-default-export
@@ -58,5 +54,6 @@ export async function getTeam(teamName) {
   const {
     data: { users },
   } = await twitchAPI.get(`/teams/${teamName}`);
+
   return users;
 }
