@@ -35,16 +35,29 @@ function initBot(teamMembers) {
     idObj.set(member._id, member);
     return idObj;
   }, new Map());
+  const shoutoutById = new Map();
   client.connect();
-  client.on('message', (channel, userState, message, self) => {
+  client.on('message', async (channel, userState, message, self) => {
+    const {
+      'message-type': messageType,
+      'user-id': userId,
+      username,
+    } = userState;
     if (self) return;
-    if (userState['message-type'] === 'whisper') return;
-    if (members.has(userState['user-id'])) {
+    if (messageType === 'whisper') return;
+    if (members.has(userState[userId])) {
       // someone has gone live
-      client.say(
-        channel,
-        `Live coders team member detected! ${userState.username}`
-      );
+      if (shoutoutById.has(userId) || shoutoutById.get(userId)) {
+        // do it
+        shoutoutById.set(userId, Date.now());
+        const channelInfo = await getChannel(userId);
+        const { status, game, display_name: displayName } = channelInfo;
+        const name = displayName ?? name;
+        client.say(
+          channel,
+          `Livecoders imGlitch team member detected, welcome ${name}! They were last seen doing ${status} in ${game}`
+        );
+      }
     }
   });
 }
@@ -56,4 +69,10 @@ export async function getTeam(teamName) {
   } = await twitchAPI.get(`/teams/${teamName}`);
 
   return users;
+}
+
+async function getChannel(channelId) {
+  // TODO
+  const { data } = await twitchAPI.get(`/channels/${channelId}`);
+  return data;
 }
