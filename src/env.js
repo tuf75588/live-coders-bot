@@ -5,19 +5,19 @@ dotenv.config();
 const {
   OAUTH_TOKEN,
   CLIENT_ID,
-  SHOUTOUT_TIMEOUT,
   CHANNEL_NAME,
   BOT_USERNAME,
   CHANNEL_ID,
+  TEAM_NAME,
 } = process.env;
 
 const env = {
   OAUTH_TOKEN,
   CLIENT_ID,
-  SHOUTOUT_TIMEOUT,
   CHANNEL_NAME,
   CHANNEL_ID,
   BOT_USERNAME,
+  TEAM_NAME,
 };
 
 // check to ensure all envrionmental variables are accounted for

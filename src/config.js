@@ -1,4 +1,4 @@
-import env from './env';
+import env from './env.js';
 
 const config = {
   ...env,
@@ -15,3 +15,5 @@ const config = {
     return `Livecoders team memeber detected! 👋 Welcome ${name}! Checkout their channel here: https://twitch.tv/${name} They were last seen streaming ${status} in ${game}`;
   },
 };
+
+export default config;
