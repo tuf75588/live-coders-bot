@@ -17,7 +17,7 @@
   "dependencies": {
     "@types/node": "^13.13.4",
     "@types/tmi.js": "^1.4.0",
-    "axios": "^0.21.2",
+    "axios": "^1.6.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.3",
